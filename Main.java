@@ -10,6 +10,11 @@ public class Main {
 
         String[] usernmae = new String[100];
         String[] password = new String[100];
+        String[] item     = new String[100];
+
+        int userCount = 0;
+        int itemCount = 0;
+        
 
     }
 }
