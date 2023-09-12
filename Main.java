@@ -9,10 +9,10 @@ public class Main {
         Scanner input = new Scanner(System.in);
 
         String[][] users = new String[100][2];
-        String[] item    = new String[100];
+        // String[]   item  = new String[100];
 
         int userCount = 0;
-        int itemCount = 0;
+        // int itemCount = 0;
 
         while (true) {
             System.out.println("|-----------------------|");
@@ -31,6 +31,26 @@ public class Main {
             int pilih = input.nextInt();
             input.nextLine();
             
+            switch (pilih) {
+                case 1:
+                    System.out.print("Masukkan Username: ");
+                    String username = input.nextLine();
+                    System.out.print("Masukkan Password: ");
+                    String password = input.nextLine();
+                    users[userCount][0] = username;
+                    users[userCount][1] = password;
+                    userCount++;
+                    System.out.println("|-----------------------|");
+                    System.out.println("| Registrasi Berhasil ! |");
+                    break;
+                // case 2:
+
+                //     break;
+                default:
+                    System.out.println("\n\nPilihan tidak valid. Silakan pilih menu (1-7).\n\n");
+                
+                input.close();
+            }
         }
         
 
