@@ -43,7 +43,26 @@ public class Main {
                     System.out.println("|-----------------------|");
                     System.out.println("| Registrasi Berhasil ! |");
                     break;
-                // case 2:
+                case 2:
+                    System.out.print("Masukkan Username: ");
+                    username = input.nextLine();
+                    System.out.print("Masukkan Password: ");
+                    password = input.nextLine();
+                    boolean login = false;
+                    for (int i = 0; i < userCount; i++) {
+                        if (users[i][0] != null && users[i][0].equals(username) && users[i][1] != null && users[i][1].equals(password)) {
+                        System.out.println("|-----------------------|");
+                        System.out.println("|     Login Berhasil    |"); 
+                        login = true;
+                        break;
+                        }
+                    }
+                    if (!login) {
+                        System.out.println("\n\n Login gagal! Periksa kembali USERNAME dan PASSWORD anda");
+                    }
+                    break;
+                // case 3:
+                //     System.out.println("");
 
                 //     break;
                 default:
