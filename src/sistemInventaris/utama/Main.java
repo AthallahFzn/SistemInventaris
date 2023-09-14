@@ -1,3 +1,4 @@
+package sistemInventaris.utama;
 import java.util.Scanner;
 
 /**
@@ -30,9 +31,10 @@ public class Main {
             
             int pilih = input.nextInt();
             input.nextLine();
-            
+            System.out.print("\033[H\033[2J"); 
+            System.out.flush();  
             switch (pilih) {
-                case 1:
+                case 1: //Daftar
                     System.out.print("Masukkan Username: ");
                     String username = input.nextLine();
                     System.out.print("Masukkan Password: ");
@@ -40,10 +42,12 @@ public class Main {
                     users[userCount][0] = username;
                     users[userCount][1] = password;
                     userCount++;
+
                     System.out.println("|-----------------------|");
                     System.out.println("| Registrasi Berhasil ! |");
+
                     break;
-                case 2:
+                case 2: //Masuk
                     System.out.print("Masukkan Username: ");
                     username = input.nextLine();
                     System.out.print("Masukkan Password: ");
@@ -53,6 +57,7 @@ public class Main {
                         if (users[i][0] != null && users[i][0].equals(username) && users[i][1] != null && users[i][1].equals(password)) {
                         System.out.println("|-----------------------|");
                         System.out.println("|     Login Berhasil    |"); 
+
                         login = true;
                         break;
                         }
@@ -61,10 +66,23 @@ public class Main {
                         System.out.println("\n\n Login gagal! Periksa kembali USERNAME dan PASSWORD anda");
                     }
                     break;
-                // case 3:
-                //     System.out.println("");
+                case 3: //Input Barang 
 
-                //     break;
+                    break;
+                case 4: //Hapus Barang
+
+                    break;
+                case 5: //Cek Daftar Barang Masuk
+
+                    break;
+                case 6: //Cek Daftar Barang Keluar
+
+                    break;
+                
+                case 7: //End Program
+                    System.exit(0);
+                    break;
+
                 default:
                     System.out.println("\n\nPilihan tidak valid. Silakan pilih menu (1-7).\n\n");
                 
