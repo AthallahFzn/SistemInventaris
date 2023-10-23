@@ -1,4 +1,5 @@
 package sistemInventaris.utama;
+
 import java.util.Scanner;
 
 /**
@@ -10,86 +11,62 @@ public class Main {
         Scanner input = new Scanner(System.in);
 
         String[][] users = new String[100][2];
-        // String[]   item  = new String[100];
+        String[][] items = new String[100][3];
 
         int userCount = 0;
-        // int itemCount = 0;
-
+        int itemcount = 0;
+        boolean sudahMasuk = false;
+        // System.out.println(String.format("%d", items[1][2]));
         while (true) {
             System.out.println("|-----------------------|");
-            System.out.println("|          Menu         |");
+            System.out.println("|       LOGIN FORM      |");
             System.out.println("|-----------------------|");
-            System.out.println("| 1. Register           |");
-            System.out.println("| 2. Login              |");
-            System.out.println("| 3. Input Barang       |");
-            System.out.println("| 4. Hapus Barang       |");
-            System.out.println("| 5. Cek Barang Masuk   |");
-            System.out.println("| 6. Cek Barang Keluar  |");
-            System.out.println("| 7. Keluar             |");
+            System.out.println("| 1. Daftar             |");
+            System.out.println("| 2. Masuk              |");
+            System.out.println("| 3. Keluar             |");
             System.out.println("|-----------------------|");
-            System.out.print("Pilih menu (1-7): ");
-            
+            System.out.print("Pilih 1-3 : ");
             int pilih = input.nextInt();
             input.nextLine();
-            System.out.print("\033[H\033[2J"); 
-            System.out.flush();  
             switch (pilih) {
-                case 1: //Daftar
-                    System.out.print("Masukkan Username: ");
+                case 1: // Daftar
+                    System.out.print("Masukkan Username : ");
                     String username = input.nextLine();
-                    System.out.print("Masukkan Password: ");
+                    System.out.print("Masukkan Password : ");
                     String password = input.nextLine();
                     users[userCount][0] = username;
                     users[userCount][1] = password;
                     userCount++;
-
-                    System.out.println("|-----------------------|");
-                    System.out.println("| Registrasi Berhasil ! |");
-
+                    System.out.println("Berhasil Daftar");
                     break;
-                case 2: //Masuk
-                    System.out.print("Masukkan Username: ");
+                case 2:
+                    System.out.print("Masukkan Username : ");
                     username = input.nextLine();
-                    System.out.print("Masukkan Password: ");
+                    System.out.print("Masukkan Password : ");
                     password = input.nextLine();
-                    boolean login = false;
-                    for (int i = 0; i < userCount; i++) {
-                        if (users[i][0] != null && users[i][0].equals(username) && users[i][1] != null && users[i][1].equals(password)) {
-                        System.out.println("|-----------------------|");
-                        System.out.println("|     Login Berhasil    |"); 
 
-                        login = true;
-                        break;
+                    for (int i = 0; i < userCount; i++) {
+                        if (users[i][0].equals(username) && users[i][1].equals(password)) {
+                            sudahMasuk = true;
+                            System.out.println("Berhasil Login");
                         }
                     }
-                    if (!login) {
-                        System.out.println("\n\n Login gagal! Periksa kembali USERNAME dan PASSWORD anda");
+                    if (!sudahMasuk) {
+                        System.out.println("Gagal Login");
                     }
                     break;
-                case 3: //Input Barang 
-
+                case 3:
+                    if (sudahMasuk) {
+                        System.exit(0);
+                    } else if (!sudahMasuk) {
+                        System.out.println("Login terlebih dahulu");
+                    }
                     break;
-                case 4: //Hapus Barang
-
-                    break;
-                case 5: //Cek Daftar Barang Masuk
-
-                    break;
-                case 6: //Cek Daftar Barang Keluar
-
-                    break;
-                
-                case 7: //End Program
-                    System.exit(0);
-                    break;
-
                 default:
-                    System.out.println("\n\nPilihan tidak valid. Silakan pilih menu (1-7).\n\n");
-                
-                input.close();
+                    // System.out.println("pilih menu yang benar");
+                    break;
             }
         }
-        
 
     }
 }
