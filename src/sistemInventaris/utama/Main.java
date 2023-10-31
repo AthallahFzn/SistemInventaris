@@ -1,5 +1,6 @@
 package sistemInventaris.utama;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -11,7 +12,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
 
         String[][] users = new String[100][2];
-        String[][] items = new String[100][4];
+        String[] itemName = new String[100];
         // int[][] items2 = new int[100][2];
 
         int userCount = 0;
@@ -90,7 +91,11 @@ public class Main {
                     }
                     break;
                 case 4:
-
+                    for (String[] i : items) {
+                    for (String j : i) {
+                    System.out.println(j);
+                    }
+                    }
                 case 5:
                     if (sudahMasuk) {
                         System.exit(0);
