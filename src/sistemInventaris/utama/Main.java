@@ -79,10 +79,8 @@ public class Main {
                             System.out.print("Masukkan Tanggal : ");
                             String date = input.nextLine();
 
-                            items[itemcount][0] = namaBarang;
-                            items[itemcount][1] = date;
-                            items[itemcount][2] = String.valueOf(jmlBarang);
-                            items[itemcount][3] = String.valueOf(hargaBarang);
+                            itemName[itemcount] = namaBarang;
+
                             itemcount++;
                         }
                         System.out.println(jml + " barang Berhasil di tambahkan");
@@ -91,10 +89,10 @@ public class Main {
                     }
                     break;
                 case 4:
-                    for (String[] i : items) {
-                    for (String j : i) {
-                    System.out.println(j);
-                    }
+                    for (int i = 0; i < users.length; i++) {
+                        for (int j = 0; j < users[i].length; j++) {
+                            System.out.println(users[i][j]);
+                        }                        
                     }
                 case 5:
                     if (sudahMasuk) {
