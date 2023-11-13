@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in).useDelimiter("\r\n|\n");
 
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -35,28 +35,27 @@ public class Main {
             System.out.println("| 5. Laporan Barang        |");
             System.out.println("| 6. Hapus Barang          |");
             System.out.println("| 7. Display Barang Keluar |");
-            System.out.println("| 8. Hapus Barang          |");
+            System.out.println("| 8. Logout                |");
             System.out.println("| 9. Keluar                |");
             System.out.println("|--------------------------|");
-            System.out.print("Pilih 1-9 : ");
-            int pilih = input.nextInt();
-            input.nextLine();
+            System.out.print("Pilih 1-9: ");
+            int pilih = Integer.parseInt(input.next());
             switch (pilih) {
                 case 1: // Daftar
-                    System.out.print("Masukkan Username : ");
-                    String username = input.nextLine();
-                    System.out.print("Masukkan Password : ");
-                    String password = input.nextLine();
+                    System.out.print("Masukkan Username: ");
+                    String username = input.next();
+                    System.out.print("Masukkan Password: ");
+                    String password = input.next();
                     users[userCount][0] = username;
                     users[userCount][1] = password;
                     userCount++;
                     System.out.println("Berhasil Daftar");
                     break;
                 case 2: // Masuk
-                    System.out.print("Masukkan Username : ");
-                    username = input.nextLine();
-                    System.out.print("Masukkan Password : ");
-                    password = input.nextLine();
+                    System.out.print("Masukkan Username: ");
+                    username = input.next();
+                    System.out.print("Masukkan Password: ");
+                    password = input.next();
 
                     for (int i = 0; i < userCount; i++) {
                         if (users[i][0].equals(username) && users[i][1].equals(password)) {
@@ -70,17 +69,17 @@ public class Main {
                     break;
                 case 3: // Input Barang
                     if (loggedIn) {
-                        System.out.print("Masukkan Jumlah Barang yang akan diinput : ");
-                        int jml = input.nextInt();
+                        System.out.print("Masukkan Jumlah Barang yang akan diinput: ");
+                        int jml = Integer.parseInt(input.next());
                         for (int i = 0; i < jml; i++) {
                             System.out.println("Barang ke-" + (i + 1));
 
-                            System.out.print("Masukkan Nama Barang : ");
+                            System.out.print("Masukkan Nama Barang: ");
                             String itemsName = input.next();
 
-                            System.out.print("Masukkan Jumlah Barang : ");
+                            System.out.print("Masukkan Jumlah Barang: ");
                             String itemQty = input.next();
-                            System.out.print("Masukkan Harga Barang : ");
+                            System.out.print("Masukkan Harga Barang: ");
                             String itemsPrice = input.next();
 
                             items[itemcount][0] = itemsName;
@@ -95,9 +94,11 @@ public class Main {
                     break;
                 case 4: // Display Barang masuk
                     if (loggedIn) {
-
-                        System.out.println("| Nama Barang | Qty | Harga | Tanggal | Admin |");
-                        System.out.println("|---------------------------------------------|");
+                        System.out.println("|-------------------------------------|");
+                        System.out.println("|             Barang Masuk            |");
+                        System.out.println("|-------------------------------------|");
+                        System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
+                        System.out.println("|-------------------------------------|");
                         for (int i = 0; i < items.length; i++) {
 
                             if (items[i][0] != null && items[i][1] != null && items[i][2] != null) {
@@ -150,7 +151,7 @@ public class Main {
                         System.out.print("Masukkan Nama Barang yang akan diambil: ");
                         String itemTaken = input.next();
                         System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
-                        int takenQty = input.nextInt();
+                        int takenQty = Integer.parseInt(input.next());
                         boolean itemsFound = false;
 
                         for (int i = 0; i < items.length; i++) {
@@ -222,8 +223,8 @@ public class Main {
 
     }
 }
-// for (String[] i : users) {
-// for (String j : i) {
+// for (String[] i: users) {
+// for (String j: i) {
 // System.out.println(j);
 // }
 // }
