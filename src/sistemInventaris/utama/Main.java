@@ -159,10 +159,8 @@ public class Main {
                                 int itemQty = Integer.parseInt(items[i][1]);
 
                                 if (itemQty >= takenQty) {
-                                    // Barang ditemukan, update kuantitas
                                     items[i][1] = String.valueOf(itemQty - takenQty);
 
-                                    // Tambah barang yang diambil ke daftar barang yang dihapus
                                     deletedItems[deletedItemCount][0] = items[i][0];
                                     deletedItems[deletedItemCount][1] = String.valueOf(takenQty);
                                     deletedItems[deletedItemCount][2] = items[i][2];
@@ -202,7 +200,7 @@ public class Main {
                         System.out.println("Login terlebih dahulu");
                     }
                     break;
-                case 8:
+                case 8: // Logout
                     if (loggedIn) {
                         loggedIn = false;
                         System.out.println("Logout Berhasil");
