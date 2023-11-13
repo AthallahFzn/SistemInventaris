@@ -24,7 +24,6 @@ public class Main {
         int userCount = 0;
         int itemcount = 0;
         boolean loggedIn = false;
-        // System.out.println(String.format("%d", items[1][2]));
         while (true) {
             System.out.println("|--------------------------|");
             System.out.println("|       LOGIN FORM         |");
