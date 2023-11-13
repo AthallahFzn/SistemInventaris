@@ -207,13 +207,13 @@ public class Main {
                         System.out.println("Anda belum login!");
                     }
                     break;
-                // case 9: // Exit Program
-                //     if (loggedIn) {
-                //         System.exit(0);
-                //     } else if (!loggedIn) {
-                //         System.out.println("Login terlebih dahulu");
-                //     }
-                //     break;
+                case 9: // Exit Program
+                    if (loggedIn) {
+                        System.exit(0);
+                    } else if (!loggedIn) {
+                        System.out.println("Login terlebih dahulu");
+                    }
+                    break;
                 default:
                     System.out.println("pilih menu yang benar");
                     break;
