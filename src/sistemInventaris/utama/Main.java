@@ -39,8 +39,8 @@ public class Main {
             System.out.println("| 9. Keluar                |");
             System.out.println("|--------------------------|");
             System.out.print("Pilih 1-9: ");
-            int pilih = Integer.parseInt(input.next());
-            switch (pilih) {
+            int choose = Integer.parseInt(input.next());
+            switch (choose) {
                 case 1: // Daftar
                     System.out.print("Masukkan Username: ");
                     String username = input.next();
@@ -70,8 +70,8 @@ public class Main {
                 case 3: // Input Barang
                     if (loggedIn) {
                         System.out.print("Masukkan Jumlah Barang yang akan diinput: ");
-                        int jml = Integer.parseInt(input.next());
-                        for (int i = 0; i < jml; i++) {
+                        int total = Integer.parseInt(input.next());
+                        for (int i = 0; i < total; i++) {
                             System.out.println("Barang ke-" + (i + 1));
 
                             System.out.print("Masukkan Nama Barang: ");
@@ -87,7 +87,7 @@ public class Main {
                             items[itemcount][2] = itemsPrice;
                             itemcount++;
                         }
-                        System.out.println(jml + " barang Berhasil di tambahkan");
+                        System.out.println(total + " barang Berhasil di tambahkan");
                     } else if (!loggedIn) {
                         System.out.println("Login terlebih dahulu");
                     }
@@ -116,6 +116,305 @@ public class Main {
                     break;
                 case 5: // Laporan
                     if (loggedIn) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
 
                         System.out.println("|-------------------------------------|");
                         System.out.println("|           Laporan Keuangan          |");
@@ -151,7 +450,7 @@ public class Main {
                         System.out.print("Masukkan Nama Barang yang akan diambil: ");
                         String itemTaken = input.next();
                         System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
-                        int takenQty = Integer.parseInt(input.next());
+                        int takenQty = input.nextInt();
                         boolean itemsFound = false;
 
                         for (int i = 0; i < items.length; i++) {
@@ -181,6 +480,7 @@ public class Main {
                         System.out.println("Login terlebih dahulu");
                     }
                     break;
+
                 case 7: // Display Barang Keluar
                     if (loggedIn) {
                         System.out.println("|-------------------------------------|");
@@ -209,11 +509,8 @@ public class Main {
                     }
                     break;
                 case 9: // Exit Program
-                    if (loggedIn) {
-                        System.exit(0);
-                    } else if (!loggedIn) {
-                        System.out.println("Login terlebih dahulu");
-                    }
+                    System.out.println("Terimakasih telah menggunakan program kami~");
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("pilih menu yang benar");
