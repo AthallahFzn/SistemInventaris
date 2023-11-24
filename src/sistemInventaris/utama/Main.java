@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
  * Main
  */
 public class Main {
+    public static String username; 
+    public static String password;
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in).useDelimiter("\r\n|\n");
@@ -16,12 +18,10 @@ public class Main {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = date.format(formatter);
 
-        String[][] users = new String[20][2];
         String[][] deletedItems = new String[20][3];
         String[][] items = new String[20][3];
-
+        
         int deletedItemCount = 0;
-        int userCount = 0;
         int itemcount = 0;
         boolean loggedIn = false;
         while (true) {
@@ -40,33 +40,13 @@ public class Main {
             System.out.println("|--------------------------|");
             System.out.print("Pilih 1-9: ");
             int choose = Integer.parseInt(input.next());
+            
             switch (choose) {
                 case 1: // Daftar
-                    System.out.print("Masukkan Username: ");
-                    String username = input.next();
-                    System.out.print("Masukkan Password: ");
-                    String password = input.next();
-                    users[userCount][0] = username;
-                    users[userCount][1] = password;
-                    userCount++;
-                    System.out.println("Berhasil Daftar");
+                    daftar();
                     break;
                 case 2: // Masuk
-                    System.out.print("Masukkan Username: ");
-                    username = input.next();
-                    System.out.print("Masukkan Password: ");
-                    password = input.next();
-
-                    for (int i = 0; i < userCount; i++) {
-                        if (users[i][0].equals(username) && users[i][1].equals(password)) {
-                            loggedIn = true;
-                            System.out.println("Berhasil Login");
-                        }
-                    }
-                    if (!loggedIn) {
-                        System.out.println("Gagal Login");
-                    }
-                    break;
+                    masuk();   break;
                 case 3: // Input Barang
                     if (loggedIn) {
                         System.out.print("Masukkan Jumlah Barang yang akan diinput: ");
@@ -116,306 +96,6 @@ public class Main {
                     break;
                 case 5: // Laporan
                     if (loggedIn) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
-
                         System.out.println("|-------------------------------------|");
                         System.out.println("|           Laporan Keuangan          |");
                         System.out.println("|-------------------------------------|");
@@ -437,11 +117,11 @@ public class Main {
                                 System.err.print("");
                             }
                         }
-
                         System.out.println("|-------------------------------------|");
                         System.out.println("|Total: Rp." + priceTotal + ",00              |");
                         System.out.println("|-------------------------------------|");
-                    } else if (!loggedIn) {
+                    }
+                    else if (!loggedIn) {
                         System.out.println("Login terlebih dahulu");
                     }
                     break;
@@ -452,7 +132,6 @@ public class Main {
                         System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
                         int takenQty = input.nextInt();
                         boolean itemsFound = false;
-
                         for (int i = 0; i < items.length; i++) {
                             if (items[i][0] != null && items[i][0].equalsIgnoreCase(itemTaken)) {
                                 int itemQty = Integer.parseInt(items[i][1]);
@@ -466,6 +145,7 @@ public class Main {
                                     deletedItemCount++;
 
                                     itemsFound = true;
+                                    
                                     System.out.println("Barang berhasil diambil.");
                                 } else {
                                     System.out.println("Jumlah barang yang tersedia tidak mencukupi.");
@@ -519,6 +199,37 @@ public class Main {
         }
 
     }
+    public static void daftar(){
+        Scanner sc = new Scanner(System.in).useDelimiter("\r\n|\n");
+
+        System.out.print("Masukkan username: ");
+        username = sc.nextLine();
+        
+        System.out.print("Masukkan password: ");
+        password = sc.nextLine();
+
+        System.out.println("Berhasil Daftar");
+    }
+
+    public static void masuk(){
+        Scanner sc = new Scanner(System.in).useDelimiter("\r\n|\n");
+
+        if (username == null || password == null) {
+            System.out.println("Belum terdaftar. Silahkan daftar terlebih dahulu");
+            return; 
+        } 
+        System.out.print("Masukkan username: ");
+        String inputUsername = sc.nextLine();
+
+        System.out.print("Masukkan password: ");
+        String inputPassword = sc.nextLine();
+
+        if (username.equals(inputUsername) && password.equals(inputPassword)) {
+            System.out.println("Berhasil Masuk");
+        } else {
+            System.out.println("Username atau password salah");
+        }
+        } 
 }
 // for (String[] i: users) {
 // for (String j: i) {
