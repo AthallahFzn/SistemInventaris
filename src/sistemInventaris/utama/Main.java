@@ -240,12 +240,12 @@ public class Main {
                         break;
 
                     case 4:
-                    System.out.println("Barang berjamur");
-                    break;
+                        System.out.println("Barang berjamur");
+                        break;
 
                     default:
-                    System.out.println("Pilihan menu tersebut tidak ada");
-                    break;
+                        System.out.println("Pilihan menu tersebut tidak ada");
+                        break;
                 } System.out.println();
 
                 boolean itemsFound = false;
