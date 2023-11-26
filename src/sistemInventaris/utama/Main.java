@@ -217,8 +217,7 @@ public class Main {
                 System.out.println("_____Alasan Barang Dihapus_____");
                 System.out.println("1. Kadaluarsa                  ");
                 System.out.println("2. Digunakan untuk penjualan   ");
-                System.out.println("3. Basi                        ");
-                System.out.println("4. Berjamur                    ");
+                System.out.println("3. Berjamur                    ");
 
                 System.out.print("Masukkan Nama Barang yang akan diambil: ");
                 String itemTaken = input.next();
@@ -230,19 +229,12 @@ public class Main {
                     case 1:
                         System.out.println("Barang sudah kadaluarsa");
                         break;
-                    
                     case 2: 
                         System.out.println("Barang digunakan untuk penjualan");
                         break;
-
                     case 3:
-                        System.out.println("Barang basi");
-                        break;
-
-                    case 4:
                         System.out.println("Barang berjamur");
                         break;
-
                     default:
                         System.out.println("Pilihan menu tersebut tidak ada");
                         break;
