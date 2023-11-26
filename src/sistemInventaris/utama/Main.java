@@ -1,29 +1,34 @@
-package sistemInventaris.utama;
-
-import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
-/**
- * Main
- */
 public class Main {
     public static String username; 
-    public static String password;
-
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in).useDelimiter("\r\n|\n");
-
-        LocalDate date = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = date.format(formatter);
-
-        String[][] deletedItems = new String[20][3];
-        String[][] items = new String[20][3];
+    public static String password; 
+    
+    public static LocalDate date = LocalDate.now();
+    public static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static String formattedDate = date.format(formatter);
+    
+    public static String[][] deletedItems = new String[20][4];
+    public static String[][] items = new String[20][4];
+   
         
-        int deletedItemCount = 0;
-        int itemcount = 0;
-        boolean loggedIn = false;
+    public static int deletedItemCount = 0;
+    public static int itemcount = 0;
+    public static boolean loggedIn = false;
+    
+    public static void main(String[] args) {
+    Scanner input = new Scanner(System.in).useDelimiter("\r\n|\n");
+    
+    System.out.println("Welcome to the Restaurant Inventory !");
+    System.out.println();
+
+    System.out.println("Daftar Akun");
+    daftar();
+    System.out.println("Masuk Akun");
+    masuk();
+
         while (true) {
             System.out.println("|--------------------------|");
             System.out.println("|       LOGIN FORM         |");
@@ -38,168 +43,54 @@ public class Main {
             System.out.println("| 8. Logout                |");
             System.out.println("| 9. Keluar                |");
             System.out.println("|--------------------------|");
-            System.out.print("Pilih 1-9: ");
-            int choose = Integer.parseInt(input.next());
             
+            System.out.print("Pilih 1-9: ");
+            int choose = input.nextInt();
+        
             switch (choose) {
-                case 1: // Daftar
-                    daftar();
-                    break;
-                case 2: // Masuk
-                    masuk();   break;
-                case 3: // Input Barang
-                    if (loggedIn) {
-                        System.out.print("Masukkan Jumlah Barang yang akan diinput: ");
-                        int total = Integer.parseInt(input.next());
-                        for (int i = 0; i < total; i++) {
-                            System.out.println("Barang ke-" + (i + 1));
+                case 1 : //daftar akun
+                daftar();
+                break;
 
-                            System.out.print("Masukkan Nama Barang: ");
-                            String itemsName = input.next();
+                case 2://login akun
+                masuk();
+                break;
 
-                            System.out.print("Masukkan Jumlah Barang: ");
-                            String itemQty = input.next();
-                            System.out.print("Masukkan Harga Barang: ");
-                            String itemsPrice = input.next();
+                case 3://input barang
+                inputBarang();
+                break;
 
-                            items[itemcount][0] = itemsName;
-                            items[itemcount][1] = itemQty;
-                            items[itemcount][2] = itemsPrice;
-                            itemcount++;
-                        }
-                        System.out.println(total + " barang Berhasil di tambahkan");
-                    } else if (!loggedIn) {
-                        System.out.println("Login terlebih dahulu");
-                    }
-                    break;
-                case 4: // Display Barang masuk
-                    if (loggedIn) {
-                        System.out.println("|-------------------------------------|");
-                        System.out.println("|             Barang Masuk            |");
-                        System.out.println("|-------------------------------------|");
-                        System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
-                        System.out.println("|-------------------------------------|");
-                        for (int i = 0; i < items.length; i++) {
+                case 4://display barang masuk
+                displayBarangMasuk();
+                break;
 
-                            if (items[i][0] != null && items[i][1] != null && items[i][2] != null) {
-                                System.out.println(
-                                        "| " + items[i][0] + " | " + items[i][1] + " | Rp." + items[i][2] + " | "
-                                                + formattedDate + " |");
-                            } else {
-                                System.out.print("");
-                            }
-                        }
-                        System.out.println("|-------------------------------------|");
-                    } else if (!loggedIn) {
-                        System.out.println("Login terlebih dahulu");
-                    }
-                    break;
-                case 5: // Laporan
-                    if (loggedIn) {
-                        System.out.println("|-------------------------------------|");
-                        System.out.println("|           Laporan Keuangan          |");
-                        System.out.println("|-------------------------------------|");
-                        System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
-                        System.out.println("|-------------------------------------|");
-                        int priceTotal = 0;
+                case 5://laporan barang yang tersedia
+                laporanBarang();
+                break;
 
-                        for (int i = 0; i < items.length; i++) {
-                            if (items[i][0] != null && items[i][1] != null && items[i][2] != null) {
-                                System.out.println(
-                                        "| " + items[i][0] + " | " + items[i][1] + " | Rp." + items[i][2] + " | "
-                                                + formattedDate + " |");
+                case 6://hapus barang
+                hapusBarang();
+                break;
+                
+                case 7://display barang yang di hapus & keluar
+                displayBarangKeluar();
+                break;
 
-                                int quantity = Integer.parseInt(items[i][1]);
-                                int price = Integer.parseInt(items[i][2]);
-                                int itemsTotal = quantity * price;
-                                priceTotal += itemsTotal;
-                            } else {
-                                System.err.print("");
-                            }
-                        }
-                        System.out.println("|-------------------------------------|");
-                        System.out.println("|Total: Rp." + priceTotal + ",00              |");
-                        System.out.println("|-------------------------------------|");
-                    }
-                    else if (!loggedIn) {
-                        System.out.println("Login terlebih dahulu");
-                    }
-                    break;
-                case 6: // Hapus Barang
-                    if (loggedIn) {
-                        System.out.print("Masukkan Nama Barang yang akan diambil: ");
-                        String itemTaken = input.next();
-                        System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
-                        int takenQty = input.nextInt();
-                        boolean itemsFound = false;
-                        for (int i = 0; i < items.length; i++) {
-                            if (items[i][0] != null && items[i][0].equalsIgnoreCase(itemTaken)) {
-                                int itemQty = Integer.parseInt(items[i][1]);
+                case 8://logout dari akun
+                logout();
+                break;
 
-                                if (itemQty >= takenQty) {
-                                    items[i][1] = String.valueOf(itemQty - takenQty);
+                case 9://keluar dari program
+                keluar();
+                break;
 
-                                    deletedItems[deletedItemCount][0] = items[i][0];
-                                    deletedItems[deletedItemCount][1] = String.valueOf(takenQty);
-                                    deletedItems[deletedItemCount][2] = items[i][2];
-                                    deletedItemCount++;
-
-                                    itemsFound = true;
-                                    
-                                    System.out.println("Barang berhasil diambil.");
-                                } else {
-                                    System.out.println("Jumlah barang yang tersedia tidak mencukupi.");
-                                }
-                                break;
-                            }
-                        }
-                        if (!itemsFound) {
-                            System.out.println("Barang tidak ditemukan.");
-                        }
-                    } else if (!loggedIn) {
-                        System.out.println("Login terlebih dahulu");
-                    }
-                    break;
-
-                case 7: // Display Barang Keluar
-                    if (loggedIn) {
-                        System.out.println("|-------------------------------------|");
-                        System.out.println("|       Barang yang Telah Keluar      |");
-                        System.out.println("|-------------------------------------|");
-                        System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
-                        System.out.println("|-------------------------------------|");
-                        for (int i = 0; i < deletedItems.length; i++) {
-                            if (deletedItems[i][0] != null) {
-                                System.out.println(
-                                        "| " + deletedItems[i][0] + " | " + deletedItems[i][1] + " | "
-                                                + deletedItems[i][2] + " |" + formattedDate + " |");
-                            }
-                        }
-                        System.out.println("|-------------------------------------|");
-                    } else if (!loggedIn) {
-                        System.out.println("Login terlebih dahulu");
-                    }
-                    break;
-                case 8: // Logout
-                    if (loggedIn) {
-                        loggedIn = false;
-                        System.out.println("Logout Berhasil");
-                    } else {
-                        System.out.println("Anda belum login!");
-                    }
-                    break;
-                case 9: // Exit Program
-                    System.out.println("Terimakasih telah menggunakan program kami~");
-                    System.exit(0);
-                    break;
                 default:
-                    System.out.println("pilih menu yang benar");
-                    break;
-            }
+                System.out.println("Pilihan anda tidak ada di menu, silahkan pilih lagi!");
+                break;
+            } 
         }
-
-    }
-    public static void daftar(){
+}
+    public static void daftar(){ //daftar akun
         Scanner sc = new Scanner(System.in).useDelimiter("\r\n|\n");
 
         System.out.print("Masukkan username: ");
@@ -209,9 +100,10 @@ public class Main {
         password = sc.nextLine();
 
         System.out.println("Berhasil Daftar");
+        System.out.println();
     }
 
-    public static void masuk(){
+    public static void masuk(){ //masuk akun
         Scanner sc = new Scanner(System.in).useDelimiter("\r\n|\n");
 
         if (username == null || password == null) {
@@ -226,13 +118,197 @@ public class Main {
 
         if (username.equals(inputUsername) && password.equals(inputPassword)) {
             System.out.println("Berhasil Masuk");
+            loggedIn = true;
         } else {
             System.out.println("Username atau password salah");
         }
-        } 
+        System.out.println();
+        }
+
+    public static void inputBarang() {
+        Scanner sc = new Scanner(System.in).useDelimiter("\r\n|\n");
+        if (loggedIn) {
+        System.out.print("Masukkan Jumlah Barang yang akan diinput: ");
+            int total = Integer.parseInt(sc.next());
+            
+            for (int i = 0; i < total; i++) {
+                System.out.println("Barang ke-" + (i + 1));
+
+                System.out.print("Masukkan Nama Barang: ");
+                String itemsName = sc.next();
+
+                System.out.print("Masukkan Jumlah Barang: ");
+                String itemQty = sc.next();
+                System.out.print("Masukkan Harga Barang: ");
+                String itemsPrice = sc.next();
+
+                items[itemcount][0] = itemsName;
+                items[itemcount][1] = itemQty;
+                items[itemcount][2] = itemsPrice;
+                itemcount++;
+            }
+            System.out.println(total + " barang Berhasil di tambahkan");
+        } else if (!loggedIn){
+            System.out.println("Login terlebih dahulu!");
+        }
+        System.out.println();
+    } 
+
+    public static void displayBarangMasuk() {
+        if (loggedIn) {
+            System.out.println("|-------------------------------------|");
+            System.out.println("|             Barang Masuk            |");
+            System.out.println("|-------------------------------------|");
+            System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
+            System.out.println("|-------------------------------------|");
+            for (int i = 0; i < items.length; i++) {
+
+                if (items[i][0] != null && items[i][1] != null && items[i][2] != null) {
+                    System.out.println(
+                            "| " + items[i][0] + " | " + items[i][1] + " | Rp." + items[i][2] + " | "
+                                    + formattedDate + " |");
+                } else {
+                    System.out.print("");
+                }
+            }
+            System.out.println("|-------------------------------------|");
+        } else if (!loggedIn) {
+            System.out.println("Login terlebih dahulu");
+        }
+        System.out.println();
+    }
+
+    public static void laporanBarang() {
+        if (loggedIn) {
+            System.out.println("|-------------------------------------|");
+            System.out.println("|           Laporan Keuangan          |");
+            System.out.println("|-------------------------------------|");
+            System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
+            System.out.println("|-------------------------------------|");
+            int priceTotal = 0;
+
+            for (int i = 0; i < items.length; i++) {
+                if (items[i][0] != null && items[i][1] != null && items[i][2] != null) {
+                    System.out.println(
+                            "| " + items[i][0] + " | " + items[i][1] + " | Rp." + items[i][2] + " | "
+                                    + formattedDate + " |");
+
+                    int quantity = Integer.parseInt(items[i][1]);
+                    int price = Integer.parseInt(items[i][2]);
+                    int itemsTotal = quantity * price;
+                    priceTotal += itemsTotal;
+                } else {
+                    System.err.print("");
+                }
+            }
+            System.out.println("|-------------------------------------|");
+            System.out.println("|Total: Rp." + priceTotal + ",00              |");
+            System.out.println("|-------------------------------------|");
+        }
+        else if (!loggedIn) {
+            System.out.println("Login terlebih dahulu");
+        }
+        System.out.println();
+    }
+
+    public static void hapusBarang(){
+        Scanner input = new Scanner(System.in).useDelimiter("\r\n|\n");
+            if (loggedIn) {
+                System.out.println("_____Alasan Barang Dihapus_____");
+                System.out.println("1. Kadaluarsa                  ");
+                System.out.println("2. Digunakan untuk penjualan   ");
+                System.out.println("3. Basi                        ");
+                System.out.println("4. Berjamur                    ");
+
+                System.out.print("Masukkan Nama Barang yang akan diambil: ");
+                String itemTaken = input.next();
+                System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
+                int takenQty = input.nextInt();
+                System.out.print("Alasan barang dihapus: ");
+                int reason = input.nextInt();
+                switch (reason) {
+                    case 1:
+                        System.out.println("Barang sudah kadaluarsa");
+                        break;
+                    
+                    case 2: 
+                        System.out.println("Barang digunakan untuk penjualan");
+                        break;
+
+                    case 3:
+                        System.out.println("Barang basi");
+                        break;
+
+                    case 4:
+                    System.out.println("Barang berjamur");
+                    break;
+
+                    default:
+                    System.out.println("Pilihan menu tersebut tidak ada");
+                    break;
+                } System.out.println();
+
+                boolean itemsFound = false;
+                for (int i = 0; i < items.length; i++) {
+                    if (items[i][0] != null && items[i][0].equalsIgnoreCase(itemTaken)) {
+                        int itemQty = Integer.parseInt(items[i][1]);
+
+                        if (itemQty >= takenQty) {
+                            items[i][1] = String.valueOf(itemQty - takenQty);
+
+                            deletedItems[deletedItemCount][0] = items[i][0];
+                            deletedItems[deletedItemCount][1] = String.valueOf(takenQty);
+                            deletedItems[deletedItemCount][2] = items[i][2];
+                            deletedItems[deletedItemCount][3] = String.valueOf(reason);
+                            deletedItemCount++;
+
+                            itemsFound = true;
+                            
+                            System.out.println("Barang berhasil diambil.");
+                        } else {
+                            System.out.println("Jumlah barang yang tersedia tidak mencukupi.");
+                        }
+                    }
+                }
+                if (!itemsFound) {
+                    System.out.println("Barang tidak ditemukan.");
+                }
+            } else if (!loggedIn) {
+                System.out.println("Login terlebih dahulu");
+            }
+    }
+    
+    public static void displayBarangKeluar(){
+        if (loggedIn) {
+            System.out.println("|---------------------------------------------|");
+            System.out.println("|           Barang yang Telah Keluar          |");
+            System.out.println("|---------------------------------------------|");
+            System.out.println("| Nama Barang | Qty | Harga | Alasan | Tanggal|");
+            System.out.println("|---------------------------------------------|");
+            for (int i = 0; i < deletedItems.length; i++) {
+                if (deletedItems[i][0] != null) {
+                    System.out.println(
+                            "| " + deletedItems[i][0] + " | " + deletedItems[i][1] + " | "
+                                    + deletedItems[i][2] + " | " + deletedItems[i][3] + " | " + formattedDate + " |");
+                }
+            }
+            System.out.println("|-------------------------------------|");
+        } else if (!loggedIn) {
+            System.out.println("Login terlebih dahulu");
+        }
+    }
+
+    public static void logout(){
+        if (loggedIn) {
+            loggedIn = false;
+            System.out.println("Logout Berhasil");
+        } else {
+            System.out.println("Anda belum login!");
+        }
+    }
+
+    public static void keluar(){
+        System.out.println("Terimakasih telah menggunakan program kami~");
+        System.exit(0);
+    }
 }
-// for (String[] i: users) {
-// for (String j: i) {
-// System.out.println(j);
-// }
-// }
