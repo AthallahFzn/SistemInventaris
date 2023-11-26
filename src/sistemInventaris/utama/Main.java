@@ -125,7 +125,7 @@ public class Main {
         System.out.println();
         }
 
-    public static void inputBarang() {
+    public static void inputBarang() {//input barang
         Scanner sc = new Scanner(System.in).useDelimiter("\r\n|\n");
         if (loggedIn) {
         System.out.print("Masukkan Jumlah Barang yang akan diinput: ");
@@ -154,7 +154,7 @@ public class Main {
         System.out.println();
     } 
 
-    public static void displayBarangMasuk() {
+    public static void displayBarangMasuk() {//display barang yang di input
         if (loggedIn) {
             System.out.println("|-------------------------------------|");
             System.out.println("|             Barang Masuk            |");
@@ -178,7 +178,7 @@ public class Main {
         System.out.println();
     }
 
-    public static void laporanBarang() {
+    public static void laporanBarang() {//laporan barang yang tersedia 
         if (loggedIn) {
             System.out.println("|-------------------------------------|");
             System.out.println("|           Laporan Keuangan          |");
@@ -211,7 +211,7 @@ public class Main {
         System.out.println();
     }
 
-    public static void hapusBarang(){
+    public static void hapusBarang(){//hapus barang beserta alasan menghapus barang
         Scanner input = new Scanner(System.in).useDelimiter("\r\n|\n");
             if (loggedIn) {
                 System.out.println("_____Alasan Barang Dihapus_____");
@@ -278,7 +278,7 @@ public class Main {
             }
     }
     
-    public static void displayBarangKeluar(){
+    public static void displayBarangKeluar(){//display barang yang keluar
         if (loggedIn) {
             System.out.println("|---------------------------------------------|");
             System.out.println("|           Barang yang Telah Keluar          |");
@@ -298,7 +298,7 @@ public class Main {
         }
     }
 
-    public static void logout(){
+    public static void logout(){//logout dari akun
         if (loggedIn) {
             loggedIn = false;
             System.out.println("Logout Berhasil");
@@ -307,7 +307,7 @@ public class Main {
         }
     }
 
-    public static void keluar(){
+    public static void keluar(){//keluar dari program
         System.out.println("Terimakasih telah menggunakan program kami~");
         System.exit(0);
     }
