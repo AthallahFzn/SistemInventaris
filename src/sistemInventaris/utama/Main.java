@@ -19,16 +19,20 @@ public class Main {
     public static boolean loggedIn = false;
     
     public static void main(String[] args) {
-    Scanner input = new Scanner(System.in).useDelimiter("\r\n|\n");
-    
-    System.out.println("Welcome to the Restaurant Inventory !");
-    System.out.println();
+        Scanner input = new Scanner(System.in).useDelimiter("\r\n|\n");
 
-    System.out.println("Daftar Akun");
-    daftar();
-    System.out.println("Masuk Akun");
-    masuk();
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = date.format(formatter);
 
+        String[][] users = new String[20][2];
+        String[][] deletedItems = new String[20][3];
+        String[][] items = new String[20][3];
+
+        int deletedItemCount = 0;
+        int userCount = 0;
+        int itemcount = 0;
+        boolean loggedIn = false;
         while (true) {
             System.out.println("|--------------------------|");
             System.out.println("|       LOGIN FORM         |");
@@ -163,29 +167,327 @@ public class Main {
             System.out.println("|-------------------------------------|");
             for (int i = 0; i < items.length; i++) {
 
-                if (items[i][0] != null && items[i][1] != null && items[i][2] != null) {
-                    System.out.println(
-                            "| " + items[i][0] + " | " + items[i][1] + " | Rp." + items[i][2] + " | "
-                                    + formattedDate + " |");
-                } else {
-                    System.out.print("");
-                }
-            }
-            System.out.println("|-------------------------------------|");
-        } else if (!loggedIn) {
-            System.out.println("Login terlebih dahulu");
-        }
-        System.out.println();
-    }
+                            if (items[i][0] != null && items[i][1] != null && items[i][2] != null) {
+                                System.out.println(
+                                        "| " + items[i][0] + " | " + items[i][1] + " | Rp." + items[i][2] + " | "
+                                                + formattedDate + " |");
+                            } else {
+                                System.out.print("");
+                            }
+                        }
+                        System.out.println("|-------------------------------------|");
+                    } else if (!loggedIn) {
+                        System.out.println("Login terlebih dahulu");
+                    }
+                    break;
+                case 5: // Laporan
+                    if (loggedIn) {
 
-    public static void laporanBarang() {//laporan barang yang tersedia 
-        if (loggedIn) {
-            System.out.println("|-------------------------------------|");
-            System.out.println("|           Laporan Keuangan          |");
-            System.out.println("|-------------------------------------|");
-            System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
-            System.out.println("|-------------------------------------|");
-            int priceTotal = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+                        System.out.println("|-------------------------------------|");
+                        System.out.println("|           Laporan Keuangan          |");
+                        System.out.println("|-------------------------------------|");
+                        System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
+                        System.out.println("|-------------------------------------|");
+                        int priceTotal = 0;
 
             for (int i = 0; i < items.length; i++) {
                 if (items[i][0] != null && items[i][1] != null && items[i][2] != null) {
