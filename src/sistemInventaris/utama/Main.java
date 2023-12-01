@@ -15,6 +15,7 @@ public class Main {
     static String formattedDate = date.format(formatter);
     static String[][] users = new String[20][2];
     static String[][] deletedItems = new String[20][4];
+    static String[][] deletedItems1 = new String[20][4];
     static String[][] items = new String[20][3];
     static int deletedItemCount = 0;
     static int userCount = 0;
@@ -44,13 +45,19 @@ public class Main {
                 case 5: // Laporan
                     report();
                     break;
-                case 6: // Hapus Barang
-                    deleteItems();
+                case 6: // Hapus Barang Dijual
+                    deleteSoldItems();
                     break;
-                case 7: // Display Barang Keluar
-                    displayBarangKeluar();
+                case 7: // Display Barang Dijual
+                    displayofSoldItems();
                     break;
-                case 8: // Logout
+                case 8: // Hapus Barang Dibuang
+                    deletedDiscradedItems();
+                    break;
+                case 9: // Display Barang Dibuang
+                    displayofDiscradedItems();
+                    break;
+                case 10:// Logout
                     if (loggedIn) {
                         loggedIn = false;
                         System.out.println("Logout Berhasil");
@@ -58,7 +65,7 @@ public class Main {
                         System.out.println("Anda belum login!");
                     }
                     break;
-                case 9: // Exit Program
+                case 11: // Exit Program
                     System.out.println("Terimakasih telah menggunakan program kami~");
                     System.exit(0);
                     break;
@@ -70,7 +77,7 @@ public class Main {
 
     }
 
-    static void signUp() {
+    static void signUp() { //nomor 1
         System.out.print("Masukkan Username: ");
         inputUsername = input.next();
         System.out.print("Masukkan Password: ");
@@ -81,7 +88,7 @@ public class Main {
         System.out.println("Berhasil Daftar");
     }
 
-    static void login() {
+    static void login() { //nomor 2
         System.out.print("Masukkan Username: ");
         inputUsername = input.next();
         System.out.print("Masukkan Password: ");
@@ -98,7 +105,7 @@ public class Main {
         }
     }
 
-    static void inputBarang() {
+    static void inputBarang() { //nomor 3
         if (loggedIn) {
             System.out.print("Masukkan Jumlah Barang yang akan diinput: ");
             int total = Integer.parseInt(input.next());
@@ -131,7 +138,7 @@ public class Main {
         }
     }
 
-    static void displayBarangMasuk() {
+    static void displayBarangMasuk() { //nomor 4
         if (loggedIn) {
             System.out.println("|-------------------------------------|");
             System.out.println("|             Barang Masuk            |");
@@ -154,7 +161,7 @@ public class Main {
         }
     }
 
-    static void report() {
+    static void report() { //nomor 5
         if (loggedIn) {
 
             System.out.println("|-------------------------------------|");
@@ -187,15 +194,13 @@ public class Main {
         }
     }
 
-    static void deleteItems() {
+    static void deleteSoldItems() { //nomor 6
         if (loggedIn) {
 
             System.out.print("Masukkan Nama Barang yang akan diambil: ");
             String itemTaken = input.next();
             System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
             int takenQty = input.nextInt();
-            System.out.print("Alasan barang dihapus(Catatan): ");
-            String reason = input.next();
 
             boolean itemsFound = false;
             for (int i = 0; i < items.length; i++) {
@@ -208,7 +213,6 @@ public class Main {
                         deletedItems[deletedItemCount][0] = items[i][0];
                         deletedItems[deletedItemCount][1] = String.valueOf(takenQty);
                         deletedItems[deletedItemCount][2] = items[i][2];
-                        deletedItems[deletedItemCount][3] = String.valueOf(reason);
                         deletedItemCount++;
 
                         itemsFound = true;
@@ -227,19 +231,75 @@ public class Main {
         }
     }
 
-    static void displayBarangKeluar() {
+    static void displayofSoldItems() { //nomor 7
         if (loggedIn) {
-            System.out.println("|----------------------------------------------|");
-            System.out.println("|           Barang yang Telah Keluar           |");
-            System.out.println("|----------------------------------------------|");
-            System.out.println("| Nama Barang | Qty | Harga | Tanggal | Alasan |");
-            System.out.println("|----------------------------------------------|");
+            System.out.println("|-------------------------------------|");
+            System.out.println("|      Barang yang Telah Terjual      |");
+            System.out.println("|-------------------------------------|");
+            System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
+            System.out.println("|-------------------------------------|");
             for (int i = 0; i < deletedItems.length; i++) {
                 if (deletedItems[i][0] != null) {
                     System.out.println(
                             "| " + deletedItems[i][0] + " | " + deletedItems[i][1] + " | Rp. "
-                                    + deletedItems[i][2] + " |" + formattedDate + " |"
-                                    + deletedItems[i][3] + " |");
+                                    + deletedItems[i][2] + " |" + formattedDate + " |");
+                }
+            }
+            System.out.println("|-------------------------------------|");
+        } else if (!loggedIn) {
+            System.out.println("Login terlebih dahulu");
+        }
+    }
+
+    static void deletedDiscradedItems() { //nomor 8
+        if (loggedIn) {
+
+            System.out.print("Masukkan Nama Barang yang akan diambil: ");
+            String itemTaken = input.next();
+            System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
+            int takenQty = input.nextInt();
+
+            boolean itemsFound = false;
+            for (int i = 0; i < items.length; i++) {
+                if (items[i][0] != null && items[i][0].equalsIgnoreCase(itemTaken)) {
+                    int itemQty = Integer.parseInt(items[i][1]);
+
+                    if (itemQty >= takenQty) {
+                        items[i][1] = String.valueOf(itemQty - takenQty);
+
+                        deletedItems1[deletedItemCount][0] = items[i][0];
+                        deletedItems1[deletedItemCount][1] = String.valueOf(takenQty);
+                        deletedItems1[deletedItemCount][2] = items[i][2];
+                        deletedItemCount++;
+
+                        itemsFound = true;
+
+                        System.out.println("Barang berhasil diambil.");
+                    } else {
+                        System.out.println("Jumlah barang yang tersedia tidak mencukupi.");
+                    }
+                }
+            }
+            if (!itemsFound) {
+                System.out.println("Barang tidak ditemukan.");
+            }
+        } else if (!loggedIn) {
+            System.out.println("Login terlebih dahulu");
+        }
+    }
+
+    static void displayofDiscradedItems() { //nomor 9
+        if (loggedIn) {
+            System.out.println("|-------------------------------------|");
+            System.out.println("|          Barang yang Rusak          |");
+            System.out.println("|-------------------------------------|");
+            System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
+            System.out.println("|-------------------------------------|");
+            for (int i = 0; i < deletedItems1.length; i++) {
+                if (deletedItems1[i][0] != null) {
+                    System.out.println(
+                            "| " + deletedItems1[i][0] + " | " + deletedItems1[i][1] + " | Rp. "
+                                    + deletedItems1[i][2] + " |" + formattedDate + " |");
                 }
             }
             System.out.println("|-------------------------------------|");
@@ -257,12 +317,14 @@ public class Main {
         System.out.println("| 3. Input Data            |");
         System.out.println("| 4. Display Barang Masuk  |");
         System.out.println("| 5. Laporan Barang        |");
-        System.out.println("| 6. Hapus Barang          |");
-        System.out.println("| 7. Display Barang Keluar |");
-        System.out.println("| 8. Logout                |");
-        System.out.println("| 9. Keluar                |");
+        System.out.println("| 6. Hapus Barang Terjual  |");
+        System.out.println("| 7. Display Barang Terjual|");
+        System.out.println("| 8. Hapus Barang Rusak    |");
+        System.out.println("| 9. Display Barang Rusak  |");
+        System.out.println("| 10. Logout               |");
+        System.out.println("| 11. Keluar               |");
         System.out.println("|--------------------------|");
-        System.out.print("Pilih 1-9: ");
+        System.out.print("Pilih 1-11: ");
         choose = Integer.parseInt(input.next());
     }
 
