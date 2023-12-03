@@ -77,6 +77,7 @@ public class Main {
 
     }
 
+
     static void signUp() { //nomor 1
         System.out.print("Masukkan Username: ");
         inputUsername = input.next();
@@ -104,6 +105,7 @@ public class Main {
             System.out.println("Gagal Login");
         }
     }
+
 
     static void inputBarang() { //nomor 3
         if (loggedIn) {
@@ -137,7 +139,6 @@ public class Main {
             System.out.println("Login terlebih dahulu");
         }
     }
-
     static void displayBarangMasuk() { //nomor 4
         if (loggedIn) {
             System.out.println("|-------------------------------------|");
@@ -161,7 +162,9 @@ public class Main {
         }
     }
 
+
     static void report() { //nomor 5
+
         if (loggedIn) {
 
             System.out.println("|-------------------------------------|");
@@ -202,6 +205,7 @@ public class Main {
             System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
             int takenQty = input.nextInt();
 
+
             boolean itemsFound = false;
             for (int i = 0; i < items.length; i++) {
                 if (items[i][0] != null && items[i][0].equalsIgnoreCase(itemTaken)) {
@@ -213,6 +217,7 @@ public class Main {
                         deletedItems[deletedItemCount][0] = items[i][0];
                         deletedItems[deletedItemCount][1] = String.valueOf(takenQty);
                         deletedItems[deletedItemCount][2] = items[i][2];
+
                         deletedItemCount++;
 
                         itemsFound = true;
@@ -243,6 +248,7 @@ public class Main {
                     System.out.println(
                             "| " + deletedItems[i][0] + " | " + deletedItems[i][1] + " | Rp. "
                                     + deletedItems[i][2] + " |" + formattedDate + " |");
+
                 }
             }
             System.out.println("|-------------------------------------|");
@@ -337,8 +343,4 @@ public class Main {
         return -1;
     }
 }
-// for (String[] i: users) {
-// for (String j: i) {
-// System.out.println(j);
-// }
-// }
+
