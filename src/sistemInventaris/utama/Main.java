@@ -51,13 +51,16 @@ public class Main {
                 case 7: // Display Barang Dijual
                     displayofSoldItems();
                     break;
-                case 8: // Hapus Barang Dibuang
+                case 8: //masi error coba check dl
+                    pengurutan();
+                    break;
+                case 9: // Hapus Barang Dibuang
                     deletedDiscradedItems();
                     break;
-                case 9: // Display Barang Dibuang
+                case 10: // Display Barang Dibuang
                     displayofDiscradedItems();
                     break;
-                case 10:// Logout
+                case 11:// Logout
                     if (loggedIn) {
                         loggedIn = false;
                         System.out.println("Logout Berhasil");
@@ -65,7 +68,7 @@ public class Main {
                         System.out.println("Anda belum login!");
                     }
                     break;
-                case 11: // Exit Program
+                case 12: // Exit Program
                     System.out.println("Terimakasih telah menggunakan program kami~");
                     System.exit(0);
                     break;
@@ -74,9 +77,7 @@ public class Main {
                     break;
             }
         }
-
     }
-
 
     static void signUp() { //nomor 1
         System.out.print("Masukkan Username: ");
@@ -105,7 +106,6 @@ public class Main {
             System.out.println("Gagal Login");
         }
     }
-
 
     static void inputBarang() { //nomor 3
         if (loggedIn) {
@@ -139,6 +139,7 @@ public class Main {
             System.out.println("Login terlebih dahulu");
         }
     }
+
     static void displayBarangMasuk() { //nomor 4
         if (loggedIn) {
             System.out.println("|-------------------------------------|");
@@ -162,9 +163,7 @@ public class Main {
         }
     }
 
-
     static void report() { //nomor 5
-
         if (loggedIn) {
 
             System.out.println("|-------------------------------------|");
@@ -199,41 +198,40 @@ public class Main {
 
     static void deleteSoldItems() { //nomor 6
         if (loggedIn) {
+            System.out.print("Masukkan Jumlah Barang yang akan dihapus: ");
+            int total = Integer.parseInt(input.next());
+            for (int a = 0; a < total; a++) { //outer loop 
+                System.out.println("Barang ke-" + (a + 1));
+                System.out.print("Masukkan Nama Barang yang akan diambil: ");
+                String itemTaken = input.next();
+                System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
+                int takenQty = input.nextInt();
 
-            System.out.print("Masukkan Nama Barang yang akan diambil: ");
-            String itemTaken = input.next();
-            System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
-            int takenQty = input.nextInt();
+                boolean itemsFound = false;
+                for (int i = 0; i < items.length; i++) { //inner loop
+                    if (items[i][0] != null && items[i][0].equalsIgnoreCase(itemTaken)) {
+                        int itemQty = Integer.parseInt(items[i][1]);
 
+                        if (itemQty >= takenQty) {
+                            items[i][1] = String.valueOf(itemQty - takenQty);
 
-            boolean itemsFound = false;
-            for (int i = 0; i < items.length; i++) {
-                if (items[i][0] != null && items[i][0].equalsIgnoreCase(itemTaken)) {
-                    int itemQty = Integer.parseInt(items[i][1]);
+                            deletedItems[deletedItemCount][0] = items[i][0];
+                            deletedItems[deletedItemCount][1] = String.valueOf(takenQty);
+                            deletedItems[deletedItemCount][2] = items[i][2];
+                            deletedItemCount++;
 
-                    if (itemQty >= takenQty) {
-                        items[i][1] = String.valueOf(itemQty - takenQty);
-
-                        deletedItems[deletedItemCount][0] = items[i][0];
-                        deletedItems[deletedItemCount][1] = String.valueOf(takenQty);
-                        deletedItems[deletedItemCount][2] = items[i][2];
-
-                        deletedItemCount++;
-
-                        itemsFound = true;
-
-                        System.out.println("Barang berhasil diambil.");
-                    } else {
-                        System.out.println("Jumlah barang yang tersedia tidak mencukupi.");
-                    }
-                }
+                            itemsFound = true;
+                            
+                            System.out.println("Barang berhasil diambil.");
+                        } else {
+                            System.out.println("Jumlah barang yang tersedia tidak mencukupi.");
+                        }}}
+                    if (!itemsFound) {
+                        System.out.println("Barang tidak ditemukan.");
+                    }}
+            } else if (!loggedIn) {
+                System.out.println("Login terlebih dahulu");
             }
-            if (!itemsFound) {
-                System.out.println("Barang tidak ditemukan.");
-            }
-        } else if (!loggedIn) {
-            System.out.println("Login terlebih dahulu");
-        }
     }
 
     static void displayofSoldItems() { //nomor 7
@@ -248,7 +246,6 @@ public class Main {
                     System.out.println(
                             "| " + deletedItems[i][0] + " | " + deletedItems[i][1] + " | Rp. "
                                     + deletedItems[i][2] + " |" + formattedDate + " |");
-
                 }
             }
             System.out.println("|-------------------------------------|");
@@ -257,7 +254,34 @@ public class Main {
         }
     }
 
-    static void deletedDiscradedItems() { //nomor 8
+    static void pengurutan() { //nomor 8 + masi error
+        if (loggedIn) {
+            for (int i = 0; i < deletedItems.length; i++) {
+                sort(deletedItems);
+            } 
+            for (int i = 0; i < deletedItems.length; i++){
+                for (int j = 0; j < deletedItems[i].length; j++) {
+                    System.out.println(deletedItems[i][j]);
+                }
+            }
+        } else if (!loggedIn) {
+            System.out.println("Login terlebih dahulu");
+        }
+    }
+
+    static void sort(String[][] deletedItems) {
+        for(int i = 0; i < deletedItems.length - 1; i++){
+            for (int j = 0; j < deletedItems.length - 1 - i; j++){
+                if (Integer.parseInt(deletedItems[j][1]) > Integer.parseInt(deletedItems[j + 1][1])){
+                    String temp[] = deletedItems[j];
+                    deletedItems[j] = deletedItems[j+1];
+                    deletedItems[j+1] = temp;
+                }
+            }
+        }
+    }
+
+    static void deletedDiscradedItems() { //nomor 9
         if (loggedIn) {
 
             System.out.print("Masukkan Nama Barang yang akan diambil: ");
@@ -294,7 +318,7 @@ public class Main {
         }
     }
 
-    static void displayofDiscradedItems() { //nomor 9
+    static void displayofDiscradedItems() { //nomor 10
         if (loggedIn) {
             System.out.println("|-------------------------------------|");
             System.out.println("|          Barang yang Rusak          |");
@@ -343,4 +367,8 @@ public class Main {
         return -1;
     }
 }
-
+// for (String[] i: users) {
+// for (String j: i) {
+// System.out.println(j);
+// }
+// }
