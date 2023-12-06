@@ -1,5 +1,6 @@
 package sistemInventaris.utama;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,9 +15,8 @@ public class Main {
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     static String formattedDate = date.format(formatter);
     static String[][] users = new String[20][2];
-    static String[][] deletedItems = new String[20][4];
-    static String[][] deletedItems1 = new String[20][4];
-    static String[][] items = new String[20][3];
+    static String[][] deletedItems = new String[20][5];
+    static String[][] items = new String[20][4];
     static int deletedItemCount = 0;
     static int userCount = 0;
     static int itemcount = 0;
@@ -24,6 +24,7 @@ public class Main {
     static String inputUsername;
     static String inputPassword;
     static int choose;
+    static String reason;
 
     public static void main(String[] args) {
 
@@ -46,21 +47,18 @@ public class Main {
                     report();
                     break;
                 case 6: // Hapus Barang Dijual
-                    deleteSoldItems();
+                    deleteItems();
                     break;
                 case 7: // Display Barang Dijual
-                    displayofSoldItems();
+                    displayDeletedItems();
                     break;
-                case 8: //masi error coba check dl
-                    pengurutan();
+                case 8:
+                    displayFilteredInput();
                     break;
-                case 9: // Hapus Barang Dibuang
-                    deletedDiscradedItems();
+                case 9:
+                    searchItems();
                     break;
-                case 10: // Display Barang Dibuang
-                    displayofDiscradedItems();
-                    break;
-                case 11:// Logout
+                case 10:// Logout
                     if (loggedIn) {
                         loggedIn = false;
                         System.out.println("Logout Berhasil");
@@ -68,7 +66,7 @@ public class Main {
                         System.out.println("Anda belum login!");
                     }
                     break;
-                case 12: // Exit Program
+                case 11: // Exit Program
                     System.out.println("Terimakasih telah menggunakan program kami~");
                     System.exit(0);
                     break;
@@ -79,7 +77,7 @@ public class Main {
         }
     }
 
-    static void signUp() { //nomor 1
+    static void signUp() { // nomor 1
         System.out.print("Masukkan Username: ");
         inputUsername = input.next();
         System.out.print("Masukkan Password: ");
@@ -90,7 +88,7 @@ public class Main {
         System.out.println("Berhasil Daftar");
     }
 
-    static void login() { //nomor 2
+    static void login() { // nomor 2
         System.out.print("Masukkan Username: ");
         inputUsername = input.next();
         System.out.print("Masukkan Password: ");
@@ -107,7 +105,7 @@ public class Main {
         }
     }
 
-    static void inputBarang() { //nomor 3
+    static void inputBarang() { // nomor 3
         if (loggedIn) {
             System.out.print("Masukkan Jumlah Barang yang akan diinput: ");
             int total = Integer.parseInt(input.next());
@@ -140,48 +138,51 @@ public class Main {
         }
     }
 
-    static void displayBarangMasuk() { //nomor 4
-        if (loggedIn) {
-            System.out.println("|-------------------------------------|");
-            System.out.println("|             Barang Masuk            |");
-            System.out.println("|-------------------------------------|");
-            System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
-            System.out.println("|-------------------------------------|");
-            for (int i = 0; i < items.length; i++) {
-
-                if (items[i][0] != null && items[i][1] != null && items[i][2] != null) {
-                    System.out.println(
-                            "| " + items[i][0] + " | " + items[i][1] + " | Rp." + items[i][2] + " | "
-                                    + formattedDate + " |");
-                } else {
-                    System.out.print("");
+    static void displayBarangMasuk() { // nomor 4
+         if (loggedIn) {
+            
+            itemcount = 0;
+            for (String[] item : items) {
+                if (item != null && item[0] != null && item[1] != null && item[2] != null) {
+                    itemcount++;
                 }
             }
-            System.out.println("|-------------------------------------|");
+        
+            String[][] tableBuilder = new String[itemcount + 1][4];
+            tableBuilder[0] = new String[]{"Nama", "Qty", "Price", "Date"};
+            
+            int i = 1;
+            for (String[] item : items) {
+                if (item != null && item[0] != null && item[1] != null && item[2] != null) {
+                    tableBuilder[i] = new String[]{item[0], item[1], item[2], formattedDate};
+                    i++;
+                }
+            }
+        
+            printTableFromArrays(tableBuilder);
         } else if (!loggedIn) {
             System.out.println("Login terlebih dahulu");
         }
     }
 
-    static void report() { //nomor 5
+    static void report() { // nomor 5
         if (loggedIn) {
 
             System.out.println("|-------------------------------------|");
-            System.out.println("|           Laporan Keuangan          |");
+            System.out.println("| Laporan Keuangan |");
             System.out.println("|-------------------------------------|");
             System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
             System.out.println("|-------------------------------------|");
-            int priceTotal = 0;
-
+            long priceTotal = 0;
             for (int i = 0; i < items.length; i++) {
                 if (items[i][0] != null && items[i][1] != null && items[i][2] != null) {
                     System.out.println(
                             "| " + items[i][0] + " | " + items[i][1] + " | Rp." + items[i][2] + " | "
                                     + formattedDate + " |");
 
-                    int quantity = Integer.parseInt(items[i][1]);
-                    int price = Integer.parseInt(items[i][2]);
-                    int itemsTotal = quantity * price;
+                    long quantity = Integer.parseInt(items[i][1]);
+                    long price = Integer.parseInt(items[i][2]);
+                    long itemsTotal = quantity * price;
                     priceTotal += itemsTotal;
                 } else {
                     System.err.print("");
@@ -196,19 +197,21 @@ public class Main {
         }
     }
 
-    static void deleteSoldItems() { //nomor 6
+    static void deleteItems() { // nomor 6
         if (loggedIn) {
             System.out.print("Masukkan Jumlah Barang yang akan dihapus: ");
             int total = Integer.parseInt(input.next());
-            for (int a = 0; a < total; a++) { //outer loop 
+            for (int a = 0; a < total; a++) { // outer loop
                 System.out.println("Barang ke-" + (a + 1));
                 System.out.print("Masukkan Nama Barang yang akan diambil: ");
                 String itemTaken = input.next();
                 System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
                 int takenQty = input.nextInt();
+                System.out.print("Masukkan Alasan Penghapusan (Terjual/Rusak): ");
+                reason = input.next();
 
                 boolean itemsFound = false;
-                for (int i = 0; i < items.length; i++) { //inner loop
+                for (int i = 0; i < items.length; i++) { // inner loop
                     if (items[i][0] != null && items[i][0].equalsIgnoreCase(itemTaken)) {
                         int itemQty = Integer.parseInt(items[i][1]);
 
@@ -218,121 +221,53 @@ public class Main {
                             deletedItems[deletedItemCount][0] = items[i][0];
                             deletedItems[deletedItemCount][1] = String.valueOf(takenQty);
                             deletedItems[deletedItemCount][2] = items[i][2];
+                            deletedItems[deletedItemCount][3] = formattedDate;
+                            if (reason.equalsIgnoreCase("rusak")) {
+                                deletedItems[deletedItemCount][4] = "Rusak";
+                            } else if (reason.equalsIgnoreCase("terjual")) {
+                                deletedItems[deletedItemCount][4] = "Terjual";
+                            } else {
+                                deletedItems[deletedItemCount][4] = "Lainnya";
+                            }
                             deletedItemCount++;
-
                             itemsFound = true;
-                            
                             System.out.println("Barang berhasil diambil.");
                         } else {
                             System.out.println("Jumlah barang yang tersedia tidak mencukupi.");
-                        }}}
-                    if (!itemsFound) {
-                        System.out.println("Barang tidak ditemukan.");
-                    }}
-            } else if (!loggedIn) {
-                System.out.println("Login terlebih dahulu");
-            }
-    }
-
-    static void displayofSoldItems() { //nomor 7
-        if (loggedIn) {
-            System.out.println("|-------------------------------------|");
-            System.out.println("|      Barang yang Telah Terjual      |");
-            System.out.println("|-------------------------------------|");
-            System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
-            System.out.println("|-------------------------------------|");
-            for (int i = 0; i < deletedItems.length; i++) {
-                if (deletedItems[i][0] != null) {
-                    System.out.println(
-                            "| " + deletedItems[i][0] + " | " + deletedItems[i][1] + " | Rp. "
-                                    + deletedItems[i][2] + " |" + formattedDate + " |");
-                }
-            }
-            System.out.println("|-------------------------------------|");
-        } else if (!loggedIn) {
-            System.out.println("Login terlebih dahulu");
-        }
-    }
-
-    static void pengurutan() { //nomor 8 + masi error
-        if (loggedIn) {
-            for (int i = 0; i < deletedItems.length; i++) {
-                sort(deletedItems);
-            } 
-            for (int i = 0; i < deletedItems.length; i++){
-                for (int j = 0; j < deletedItems[i].length; j++) {
-                    System.out.println(deletedItems[i][j]);
-                }
-            }
-        } else if (!loggedIn) {
-            System.out.println("Login terlebih dahulu");
-        }
-    }
-
-    static void sort(String[][] deletedItems) {
-        for(int i = 0; i < deletedItems.length - 1; i++){
-            for (int j = 0; j < deletedItems.length - 1 - i; j++){
-                if (Integer.parseInt(deletedItems[j][1]) > Integer.parseInt(deletedItems[j + 1][1])){
-                    String temp[] = deletedItems[j];
-                    deletedItems[j] = deletedItems[j+1];
-                    deletedItems[j+1] = temp;
-                }
-            }
-        }
-    }
-
-    static void deletedDiscradedItems() { //nomor 9
-        if (loggedIn) {
-
-            System.out.print("Masukkan Nama Barang yang akan diambil: ");
-            String itemTaken = input.next();
-            System.out.print("Masukkan Jumlah Barang yang akan diambil: ");
-            int takenQty = input.nextInt();
-
-            boolean itemsFound = false;
-            for (int i = 0; i < items.length; i++) {
-                if (items[i][0] != null && items[i][0].equalsIgnoreCase(itemTaken)) {
-                    int itemQty = Integer.parseInt(items[i][1]);
-
-                    if (itemQty >= takenQty) {
-                        items[i][1] = String.valueOf(itemQty - takenQty);
-
-                        deletedItems1[deletedItemCount][0] = items[i][0];
-                        deletedItems1[deletedItemCount][1] = String.valueOf(takenQty);
-                        deletedItems1[deletedItemCount][2] = items[i][2];
-                        deletedItemCount++;
-
-                        itemsFound = true;
-
-                        System.out.println("Barang berhasil diambil.");
-                    } else {
-                        System.out.println("Jumlah barang yang tersedia tidak mencukupi.");
+                        }
                     }
                 }
-            }
-            if (!itemsFound) {
-                System.out.println("Barang tidak ditemukan.");
+                if (!itemsFound) {
+                    System.out.println("Barang tidak ditemukan.");
+                }
             }
         } else if (!loggedIn) {
             System.out.println("Login terlebih dahulu");
         }
     }
 
-    static void displayofDiscradedItems() { //nomor 10
+    static void displayDeletedItems() { // nomor 7
         if (loggedIn) {
-            System.out.println("|-------------------------------------|");
-            System.out.println("|          Barang yang Rusak          |");
-            System.out.println("|-------------------------------------|");
-            System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
-            System.out.println("|-------------------------------------|");
-            for (int i = 0; i < deletedItems1.length; i++) {
-                if (deletedItems1[i][0] != null) {
-                    System.out.println(
-                            "| " + deletedItems1[i][0] + " | " + deletedItems1[i][1] + " | Rp. "
-                                    + deletedItems1[i][2] + " |" + formattedDate + " |");
+            
+            itemcount = 0;
+            for (String[] item : deletedItems) {
+                if (item != null && item[0] != null && item[1] != null && item[2] != null && item[4] != null) {
+                    itemcount++;
                 }
             }
-            System.out.println("|-------------------------------------|");
+        
+            String[][] tableBuilder = new String[itemcount + 1][5];
+            tableBuilder[0] = new String[]{"Nama", "Qty", "Price", "Date", "Reason"};
+            
+            int i = 1;
+            for (String[] deletedItem : deletedItems) {
+                if (deletedItem != null && deletedItem[0] != null && deletedItem[1] != null && deletedItem[2] != null && deletedItem[4] != null) {
+                    tableBuilder[i] = new String[]{deletedItem[0], deletedItem[1], "Rp." + deletedItem[2], deletedItem[3], deletedItem[4]};
+                    i++;
+                }
+            }
+        
+            printTableFromArrays(tableBuilder);
         } else if (!loggedIn) {
             System.out.println("Login terlebih dahulu");
         }
@@ -340,25 +275,25 @@ public class Main {
 
     static void menu() {
         System.out.println("|--------------------------|");
-        System.out.println("|       LOGIN FORM         |");
+        System.out.println("|        LOGIN FORM        |");
         System.out.println("|--------------------------|");
-        System.out.println("| 1. Daftar                |");
-        System.out.println("| 2. Masuk                 |");
+        System.out.println("| 1. Sign Up               |");
+        System.out.println("| 2. Log in                |");
         System.out.println("| 3. Input Data            |");
-        System.out.println("| 4. Display Barang Masuk  |");
-        System.out.println("| 5. Laporan Barang        |");
-        System.out.println("| 6. Hapus Barang Terjual  |");
-        System.out.println("| 7. Display Barang Terjual|");
-        System.out.println("| 8. Hapus Barang Rusak    |");
-        System.out.println("| 9. Display Barang Rusak  |");
+        System.out.println("| 4. Display Items         |");
+        System.out.println("| 5. Report                |");
+        System.out.println("| 6. Hapus Barang          |");
+        System.out.println("| 7. Display Outgoing items|");
+        System.out.println("| 8. Filtered Items        |");
+        System.out.println("| 9. Searching             |");
         System.out.println("| 10. Logout               |");
-        System.out.println("| 11. Keluar               |");
+        System.out.println("| 11. Exit                 |");
         System.out.println("|--------------------------|");
         System.out.print("Pilih 1-11: ");
         choose = Integer.parseInt(input.next());
     }
 
-    private static int findItemIndex(String[][] items, int itemcount, String itemName) {
+    static int findItemIndex(String[][] items, int itemcount, String itemName) {
         for (int i = 0; i < itemcount; i++) {
             if (itemName.equals(items[i][0])) {
                 return i;
@@ -366,9 +301,99 @@ public class Main {
         }
         return -1;
     }
+
+    static void displayFilteredItems(String filterType) {
+        String title = "";
+        if ("Rusak".equalsIgnoreCase(filterType)) {
+            title = "Barang Rusak";
+        } else if ("Terjual".equalsIgnoreCase(filterType)) {
+            title = "Barang Terjual";
+        } else {
+            System.out.println("Filter type not recognized.");
+            return;
+        }
+
+        System.out.println("|-------------------------------------|");
+        System.out.println("|           " + title + "            |");
+        System.out.println("|-------------------------------------|");
+        System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
+        System.out.println("|-------------------------------------|");
+        for (int i = 0; i < deletedItems.length; i++) {
+            if (deletedItems[i][0] != null && filterType.equalsIgnoreCase(deletedItems[i][4])) {
+                System.out.println("| " + deletedItems[i][0] + " | " + deletedItems[i][1] + " | Rp."
+                        + deletedItems[i][2] + " | " + deletedItems[i][3] + " |");
+            }
+        }
+        System.out.println("|-------------------------------------|");
+    }
+
+    static void displayFilteredInput() {
+        System.out.print("Filter Item (Rusak/Terjual):");
+        String reason = input.next();
+        displayFilteredItems(reason);
+    }
+
+    static void searchItems() {
+        if (loggedIn) {
+            System.out.print("Masukkan nama barang yang dicari: ");
+            String searchTerm = input.next();
+
+            System.out.println("|-------------------------------------|");
+            System.out.println("|           Hasil Pencarian           |");
+            System.out.println("|-------------------------------------|");
+            System.out.println("| Nama Barang | Qty | Harga | Tanggal |");
+            System.out.println("|-------------------------------------|");
+
+            boolean itemFound = false;
+            for (String[] item : items) {
+                if (item[0] != null && item[0].equals(searchTerm)) {
+                    System.out.println(
+                            "| " + item[0] + " | " + item[1] + " | Rp." + item[2] + " | " + formattedDate + " |");
+                    itemFound = true;
+                }
+            }
+
+            if (!itemFound) {
+                System.out.println("Barang tidak ditemukan.");
+            }
+            System.out.println("|-------------------------------------|");
+        } else {
+            System.out.println("Login terlebih dahulu.");
+        }
+    }
+
+    public static int sum(int[] array) {
+        int sum = 0;
+        for (int i : array) {
+            sum += i;
+        }
+
+        return sum;
+    }
+
+    public static void printTableFromArrays(String[][] tableBuilder) {
+        int[] columnWidth = new int[tableBuilder[0].length];
+        for (String[] builder : tableBuilder) {
+            for (int i = 0; i < columnWidth.length; i++) {
+                if (columnWidth[i] < builder[i].length()) {
+                    columnWidth[i] = builder[i].length();
+                }
+            }
+        }
+
+        System.out.println("+" + "-".repeat(sum(columnWidth) + 2 + ((columnWidth.length - 1) * 3)) + "+");
+        for (int i = 0; i < tableBuilder.length; i++) {
+            for (int j = 0; j < tableBuilder[i].length; j++) {
+                System.out.print("| ");
+                System.out.print(tableBuilder[i][j]);
+                System.out.print(" ".repeat(columnWidth[j] - tableBuilder[i][j].length() + 1));
+            }
+            System.out.println("|");
+            if (i == 0) {
+                System.out.println("+" + "-".repeat(sum(columnWidth) + 2 + ((columnWidth.length - 1) * 3)) + "+");
+            }
+        }
+        System.out.println("+" + "-".repeat(sum(columnWidth) + 2 + ((columnWidth.length - 1) * 3)) + "+");
+    }
+
 }
-// for (String[] i: users) {
-// for (String j: i) {
-// System.out.println(j);
-// }
-// }
