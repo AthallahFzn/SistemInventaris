@@ -28,7 +28,6 @@ public class Main {
     static long priceTotal = 0;
 
     public static void main(String[] args) {
-
         while (true) {
             loginForm();
             switch (choose) {
@@ -143,7 +142,7 @@ public class Main {
             }
 
             String[][] tableBuilder = new String[itemcount + 1][4];
-            tableBuilder[0] = new String[] { "Nama", "Qty", "Price", "Date", "User" };
+            tableBuilder[0] = new String[] { "Item name", "Qty", "Price", "Date", "User" };
 
             int i = 1;
             for (int j = 0; j < items.length; j++) {
@@ -171,7 +170,7 @@ public class Main {
                 }
             }
             String[][] tableBuilder = new String[itemcount + 1][4];
-            tableBuilder[0] = new String[] { "Nama", "Qty", "Price", "Date", "User" };
+            tableBuilder[0] = new String[] { "Item name", "Qty", "Price", "Date", "User" };
 
             int i = 1;
             for (int j = 0; j < items.length; j++) {
@@ -258,7 +257,7 @@ public class Main {
             }
 
             String[][] tableBuilder = new String[itemcount + 1][6];
-            tableBuilder[0] = new String[] { "Nama", "Qty", "Price", "Date", "Status", "Catatan" };
+            tableBuilder[0] = new String[] { "Item name", "Qty", "Price", "Date", "Status", "Catatan" };
 
             int i = 1;
             for (String[] deletedItem : deletedItems) {
@@ -266,6 +265,33 @@ public class Main {
                         && deletedItem[4] != null && deletedItem[5] != null) {
                     tableBuilder[i] = new String[] { deletedItem[0], deletedItem[1], "Rp." + deletedItem[2],
                             deletedItem[3], deletedItem[4], deletedItem[5] };
+                    i++;
+                }
+            }
+
+            printTableFromArrays(tableBuilder);
+        } else if (!loggedIn) {
+            System.out.println("please login first.");
+        }
+    }
+
+    static void employee() {
+        if (loggedIn) {
+
+            userCount = 0;
+            for (String[] user : users) {
+                if (user != null && user[0] != null && user[1] != null && user[2] != null) {
+                    userCount++;
+                }
+            }
+
+            String[][] tableBuilder = new String[userCount + 1][3];
+            tableBuilder[0] = new String[] { "Employee name", "Role" };
+
+            int i = 1;
+            for (String[] user : users) {
+                if (user != null && user[0] != null && user[1] != null && user[2] != null) {
+                    tableBuilder[i] = new String[] { user[0], user[2] };
                     i++;
                 }
             }
@@ -332,99 +358,107 @@ public class Main {
     }
 
     static void ownerMenu() {
-        System.out.println("+--------------------------+");
-        System.out.println("|        Owner Menu        |");
-        System.out.println("|--------------------------|");
-        System.out.println("| 1. Input Data            |");
-        System.out.println("| 2. Display Items         |");
-        System.out.println("| 3. Report                |");
-        System.out.println("| 4. Delete Items          |");
-        System.out.println("| 5. Display Outgoing items|");
-        System.out.println("| 6. Filtered Items        |");
-        System.out.println("| 7. Searching             |");
-        System.out.println("| 8. Logout                |");
-        System.out.println("+--------------------------+");
-        System.out.print("pilih: ");
-        choose = Integer.parseInt(input.next());
-        switch (choose) {
-            case 1:
-                inputItems();
-                break;
-            case 2:
-                displayItems();
-                break;
-            case 3:
-                report();
-                break;
-            case 4:
-                deleteItems();
-                break;
-            case 5:
-                displayDeletedItems();
-                break;
-            case 6:
-                displayFilteredInput();
-                break;
-            case 7:
-                searchItems();
-                break;
-            case 8:
-                if (loggedIn) {
-                    loggedIn = false;
-                    System.out.println("Logout successfully");
-                } else {
-                    System.out.println("please login first.");
-                }
-                break;
-            default:
-                System.out.println("Invalid option.");
-                break;
+        while (loggedIn) {
 
+            System.out.println("+--------------------------+");
+            System.out.println("|        Owner Menu        |");
+            System.out.println("|--------------------------|");
+            System.out.println("| 1. Input Data            |");
+            System.out.println("| 2. Display Items         |");
+            System.out.println("| 3. Report                |");
+            System.out.println("| 4. Delete Items          |");
+            System.out.println("| 5. Display Outgoing items|");
+            System.out.println("| 6. Filtered Items        |");
+            System.out.println("| 7. Searching             |");
+            System.out.println("| 8. Employee              |");
+            System.out.println("| 9. Logout                |");
+            System.out.println("+--------------------------+");
+            System.out.print("pilih: ");
+            choose = Integer.parseInt(input.next());
+            switch (choose) {
+                case 1:
+                    inputItems();
+                    break;
+                case 2:
+                    displayItems();
+                    break;
+                case 3:
+                    report();
+                    break;
+                case 4:
+                    deleteItems();
+                    break;
+                case 5:
+                    displayDeletedItems();
+                    break;
+                case 6:
+                    displayFilteredInput();
+                    break;
+                case 7:
+                    searchItems();
+                    break;
+                case 8:
+                    employee();
+                    break;
+                case 9:
+                    if (loggedIn) {
+                        loggedIn = false;
+                        System.out.println("Logout successfully");
+                    } else {
+                        System.out.println("please login first.");
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+                    break;
+
+            }
         }
-
     }
 
     static void userMenu() {
-        System.out.println("+--------------------------+");
-        System.out.println("|         User Menu        |");
-        System.out.println("|--------------------------|");
-        System.out.println("| 1. Display Items         |");
-        System.out.println("| 2. Report                |");
-        System.out.println("| 3. Display Outgoing items|");
-        System.out.println("| 4. Filtered Items        |");
-        System.out.println("| 5. Searching             |");
-        System.out.println("| 6. Logout                |");
-        System.out.println("+--------------------------+");
-        System.out.print("pilih: ");
-        choose = Integer.parseInt(input.next());
-        switch (choose) {
-            case 1:
-                displayItems();
-                break;
-            case 2:
-                report();
-                break;
-            case 3:
-                displayDeletedItems();
-                break;
-            case 4:
-                displayFilteredInput();
-                break;
-            case 5:
-                searchItems();
-                break;
-            case 6:
-                if (loggedIn) {
-                    loggedIn = false;
-                    System.out.println("Logout successfully");
-                } else {
-                    System.out.println("please login first.");
-                }
-                break;
-            default:
-                System.out.println("Invalid option.");
-                break;
+        while (loggedIn) {
+            System.out.println("+--------------------------+");
+            System.out.println("|         User Menu        |");
+            System.out.println("|--------------------------|");
+            System.out.println("| 1. Display Items         |");
+            System.out.println("| 2. Report                |");
+            System.out.println("| 3. Display Outgoing items|");
+            System.out.println("| 4. Filtered Items        |");
+            System.out.println("| 5. Searching             |");
+            System.out.println("| 6. Logout                |");
+            System.out.println("+--------------------------+");
+            System.out.print("pilih: ");
+            choose = Integer.parseInt(input.next());
+            switch (choose) {
+                case 1:
+                    displayItems();
+                    break;
+                case 2:
+                    report();
+                    break;
+                case 3:
+                    displayDeletedItems();
+                    break;
+                case 4:
+                    displayFilteredInput();
+                    break;
+                case 5:
+                    searchItems();
+                    break;
+                case 6:
+                    if (loggedIn) {
+                        loggedIn = false;
+                        System.out.println("Logout successfully");
+                    } else {
+                        System.out.println("please login first.");
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+                    break;
 
+            }
         }
     }
 
