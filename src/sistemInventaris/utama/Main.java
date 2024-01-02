@@ -45,7 +45,7 @@ public class Main {
                                 userMenu();
                                 break;
                             default:
-                                System.out.println("Invalid role.");
+                                System.out.println("Terjadi Kesalahan");
                                 System.exit(0);
                                 break;
                         }
@@ -55,11 +55,11 @@ public class Main {
                     signUp();
                     break;
                 case 3: // Exit Program
-                    System.out.println("Thanks for your job.");
+                    System.out.println("Terima Kasih Sudah Menggunakan Program Kami.");
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Invalid chooice.");
+                    System.out.println("Terjadi Kesalahan.");
                     break;
             }
         }
@@ -70,7 +70,7 @@ public class Main {
         System.out.println("|        LOGIN FORM        |");
         System.out.println("|--------------------------|");
         System.out.println("| 1. Log in                |");
-        System.out.println("| 2. Sign up               |");
+        System.out.println("| 2. Daftar                |");
         System.out.println("| 3. Exit                  |");
         System.out.println("+--------------------------+");
         System.out.print("Pilih 1-3: ");
@@ -83,12 +83,12 @@ public class Main {
             System.out.println("|        Admin Menu        |");
             System.out.println("|--------------------------|");
             System.out.println("| 1. Input Data            |");
-            System.out.println("| 2. Display Items         |");
-            System.out.println("| 3. Report                |");
-            System.out.println("| 4. Delete Items          |");
-            System.out.println("| 5. Display Outgoing items|");
-            System.out.println("| 6. Filtered Items        |");
-            System.out.println("| 7. Searching             |");
+            System.out.println("| 2. Display Barang        |");
+            System.out.println("| 3. Laporan               |");
+            System.out.println("| 4. Hapus Barang          |");
+            System.out.println("| 5. Display Barang Keluar |");
+            System.out.println("| 6. Barang Masih Tersedia |");
+            System.out.println("| 7. Pencarian Barang      |");
             System.out.println("| 8. Logout                |");
             System.out.println("+--------------------------+");
             System.out.print("pilih: ");
@@ -118,13 +118,13 @@ public class Main {
                 case 8:
                     if (loggedIn) {
                         loggedIn = false;
-                        System.out.println("Logout successfully");
+                        System.out.println("Logout Berhasil");
                     } else {
-                        System.out.println("please login first");
+                        System.out.println("Harap Login Terlebih Dahulu");
                     }
                     break;
                 default:
-                    System.out.println("Invalid option.");
+                    System.out.println("Terjadi Kesalahan.");
                     break;
             }
         }
@@ -136,14 +136,14 @@ public class Main {
             System.out.println("+--------------------------+");
             System.out.println("|        Owner Menu        |");
             System.out.println("|--------------------------|");
-            System.out.println("| 1. Input Data            |");
-            System.out.println("| 2. Display Items         |");
-            System.out.println("| 3. Report                |");
-            System.out.println("| 4. Delete Items          |");
-            System.out.println("| 5. Display Outgoing items|");
-            System.out.println("| 6. Filtered Items        |");
-            System.out.println("| 7. Searching             |");
-            System.out.println("| 8. Employee              |");
+            System.out.println("| 1. Input Barang          |");
+            System.out.println("| 2. Display Barang        |");
+            System.out.println("| 3. Laporan               |");
+            System.out.println("| 4. Delete Barang         |");
+            System.out.println("| 5. Display Barang Keluar |");
+            System.out.println("| 6. Barang Masih Tersedi  |");
+            System.out.println("| 7. Pencarian Barang      |");
+            System.out.println("| 8. Daftar User           |");
             System.out.println("| 9. Logout                |");
             System.out.println("+--------------------------+");
             System.out.print("pilih: ");
@@ -176,13 +176,13 @@ public class Main {
                 case 9:
                     if (loggedIn) {
                         loggedIn = false;
-                        System.out.println("Logout successfully");
+                        System.out.println("Logout Berhasil");
                     } else {
-                        System.out.println("please login first.");
+                        System.out.println("Harap Login Terlebih Dahulu.");
                     }
                     break;
                 default:
-                    System.out.println("Invalid option.");
+                    System.out.println("Terjadi Kesalahan.");
                     break;
             }
         }
